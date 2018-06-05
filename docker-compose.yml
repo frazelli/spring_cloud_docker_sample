@@ -1,0 +1,104 @@
+version: '3'
+services:
+  config:
+    container_name: config
+ #   hostname: config
+    restart: always
+    image: frolvlad/alpine-oraclejdk8:slim
+    volumes:
+      - ./config/config-0.0.1-SNAPSHOT.jar:/config-0.0.1-SNAPSHOT.jar
+#      - ./config/application.yml:/application.yml
+#      - ./config/shared/application.yml:/shared/application.yml
+#      - ./config/shared/registry.yml:/shared/registry.yml
+#      - ./config/shared/gateway.yml:/shared/gateway.yml
+#      - ./config/shared/email-service.yml:/shared/email-service.yml
+    entrypoint: [ "java", "-jar", "/config-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - "8888:8888"
+
+  registry:
+    container_name: registry
+#    hostname: registry
+    restart: always
+    image: frolvlad/alpine-oraclejdk8:slim
+    volumes:
+#      - ./registry/bootstrap.yml:/bootstrap.yml
+      - ./registry/registry-0.0.1-SNAPSHOT.jar:/registry-0.0.1-SNAPSHOT.jar
+    entrypoint: [ "java", "-jar", "/registry-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - "8761:8761"
+
+  gateway:
+    container_name: gateway
+ #   hostname: gateway
+    restart: always
+    image: frolvlad/alpine-oraclejdk8:slim
+    volumes:
+#      - ./gateway/bootstrap.yml:/bootstrap.yml
+      - ./gateway/gateway.jar:/gateway.jar
+    entrypoint: [ "java", "-jar", "/gateway.jar"]
+    ports:
+      - "4000:4000"
+
+  user-db:
+    container_name: user-db
+#    hostname: user-db
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./user-db/postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pguser
+      POSTGRES_DB: users
+
+  auth-service:
+    container_name: auth-service
+    hostname: auth-service
+    restart: always
+    image: frolvlad/alpine-oraclejdk8:slim
+    volumes:
+ #     - ./auth-service/bootstrap.yml:/bootstrap.yml
+      - ./auth-service/auth-service-0.0.1-SNAPSHOT.jar:/auth-service-0.0.1-SNAPSHOT.jar
+    entrypoint: [ "java", "-jar", "/auth-service-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - "5000:5000"
+
+  user-service:
+    container_name: user-service
+    hostname: user-service
+    restart: always
+    image: frolvlad/alpine-oraclejdk8:slim
+    volumes:
+#      - ./user-service/bootstrap.yml:/bootstrap.yml
+      - ./user-service/user-service-0.0.1-SNAPSHOT.jar:/user-service-0.0.1-SNAPSHOT.jar
+    entrypoint: [ "java", "-jar", "/user-service-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - "8081:8081"
+
+  transaction-service:
+    container_name: transaction-service
+    hostname: transaction-service
+    restart: always
+    image: frolvlad/alpine-oraclejdk8:slim
+    volumes:
+      - ./transaction-service/bootstrap.yml:/bootstrap.yml
+      - ./transaction-service/transaction-service-0.0.1-SNAPSHOT.jar:/transaction-service-0.0.1-SNAPSHOT.jar
+    entrypoint: [ "java", "-jar", "/transaction-service-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - "8082:8082"
+
+  email-service:
+    container_name: email-service
+#    hostname: email-service
+    restart: always
+    image: frolvlad/alpine-oraclejdk8:slim
+    volumes:
+#      - ./email-service/bootstrap.yml:/bootstrap.yml
+      - ./email-service/email-service-0.0.1-SNAPSHOT.jar:/email-service-0.0.1-SNAPSHOT.jar
+    entrypoint: [ "java", "-jar", "/email-service-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - "8083:8083"
+

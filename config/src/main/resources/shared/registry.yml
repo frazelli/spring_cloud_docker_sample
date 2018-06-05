@@ -1,0 +1,13 @@
+server:
+  port: ${PORT:8761}
+
+eureka:
+  instance:
+    hostname: registry
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://registry:8761/eureka/
+    server:
+      waitTimeInMsWhenSyncEmpty: 0

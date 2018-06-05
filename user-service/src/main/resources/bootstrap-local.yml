@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/userdb
+    username: pguser
+    password: pguser
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      password: ""
+      username: user

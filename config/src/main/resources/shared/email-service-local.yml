@@ -1,0 +1,31 @@
+security:
+  oauth2:
+    client:
+      clientId: email-service
+      clientSecret: test3
+      accessTokenUri: http://localhost:5000/oauth/token
+      user-authorization-uri: http://localhost:5000/oauth/authorize
+      grant-type: client_credentials
+      scope: server
+    resource:
+      user-info-uri: http://localhost:5000/users/current
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: mail@google.com
+    password: pass
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+          ssl:
+            enable: true
+
+server:
+  port: 8083

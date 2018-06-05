@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: transaction-service
+  datasource:
+    url: jdbc:postgresql://user-db:5432/userdb
+    username: pguser
+    password: pguser
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true
+      password: ""
+      username: user

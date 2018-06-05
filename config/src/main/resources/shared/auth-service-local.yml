@@ -1,0 +1,7 @@
+server:
+  context-path: /uaa
+  port: 5000
+
+security:
+  basic:
+    enabled: false

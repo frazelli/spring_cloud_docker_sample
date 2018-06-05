@@ -1,0 +1,33 @@
+server:
+  port: 4000
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  cloud:
+    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+      routes:
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+        - Path=/users/**
+        filters:
+        - RewritePath=/users/(?<path>.*), /$\{path}
+      - id: auth-service
+        uri: lb://auth-service
+        predicates:
+        - Path=/uaa/**
+        filters:
+        - RewritePath=/uaa/(?<path>.*), /$\{path}
+      - id: email-service
+        uri: lb://email-service
+        predicates:
+        - Path=/email-service/**
+        filters:
+        - RewritePath=/email-service/(?<path>.*), /$\{path}

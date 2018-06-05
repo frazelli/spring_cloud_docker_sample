@@ -1,0 +1,25 @@
+security:
+  oauth2:
+    client:
+      clientId: email-service
+      clientSecret: test3
+      accessTokenUri: http://auth-service:5000/oauth/token
+      user-authorization-uri: http://auth-service:5000/oauth/authorize
+      grant-type: client_credentials
+      scope: server
+    resource:
+      user-info-uri: http://auth-service:5000/users/current
+
+spring:
+  mail:
+    host: smtp.google.com
+    port: 465
+    username: mail@google.com
+    password: pass
+    smtp:
+      auth: true
+      starttls:
+        enable: true
+
+server:
+  port: 8083

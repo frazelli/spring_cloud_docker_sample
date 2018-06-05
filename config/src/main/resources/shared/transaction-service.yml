@@ -1,0 +1,14 @@
+security:
+  oauth2:
+    client:
+      clientId: transaction-service
+      clientSecret: test2
+      accessTokenUri: http://auth-service:5000/oauth/token
+      user-authorization-uri: http://auth-service:5000/oauth/authorize
+      grant-type: client_credentials
+      scope: server
+    resource:
+      user-info-uri: http://auth-service:5000/users/current
+
+server:
+  port: 8082

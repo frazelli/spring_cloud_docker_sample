@@ -1,0 +1,14 @@
+security:
+  oauth2:
+    client:
+      clientId: user-service
+      clientSecret: test
+      accessTokenUri: http://localhost:5000/oauth/token
+      user-authorization-uri: http://localhost:5000/oauth/authorize
+      grant-type: client_credentials
+      scope: server
+    resource:
+      user-info-uri: http://localhost:5000/users/current
+
+server:
+  port: 8081
